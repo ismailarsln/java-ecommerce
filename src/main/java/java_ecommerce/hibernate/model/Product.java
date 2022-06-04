@@ -32,6 +32,9 @@ public class Product {
 	
 	// Constructor
 	
+	public Product() {
+	}
+	
 	public Product(Category category, String name, double price, int stock) {
 		this.category = category;
 		this.name = name;

@@ -20,6 +20,9 @@ public class Category {
 	
 	// Constructor
 	
+	public Category() {
+	}
+	
 	public Category(String name) {
 		this.name = name;
 	}

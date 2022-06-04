@@ -27,6 +27,9 @@ public class OrderItem {
 	
 	// Constructor
 	
+	public OrderItem() {
+	}
+	
 	public OrderItem(Order order, Product product, int quantity) {
 		this.order = order;
 		this.product = product;

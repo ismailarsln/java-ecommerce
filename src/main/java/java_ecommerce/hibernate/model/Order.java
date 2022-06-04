@@ -37,6 +37,9 @@ public class Order {
 	}
 	
 	// Constructor
+	
+	public Order() {
+	}
 
 	public Order(User user, double total) {
 		this.user = user;
