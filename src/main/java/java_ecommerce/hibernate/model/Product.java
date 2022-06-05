@@ -30,26 +30,26 @@ public class Product {
 	@Column(name = "stock")
 	private int stock;
 	
+	@Column(name = "image")
+	private String image;
+	
 	// Constructor
 	
 	public Product() {
 	}
 	
-	public Product(Category category, String name, double price, int stock) {
+	public Product(Category category, String name, double price, int stock, String image) {
 		this.category = category;
 		this.name = name;
 		this.price = price;
 		this.stock = stock;
+		this.image = image;
 	}
 	
 	// Getters and Setters	
 
 	public int getId() {
 		return id;
-	}
-	
-	public void setId(int id) {
-		this.id = id;
 	}
 	
 	public Category getCategory() {
@@ -82,5 +82,13 @@ public class Product {
 	
 	public void setStock(int stock) {
 		this.stock = stock;
+	}	
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 }

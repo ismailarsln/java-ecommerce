@@ -31,10 +31,6 @@ public class Order {
 	@CreationTimestamp
 	@Column(name = "created_at", nullable = false, updatable = false)
 	private Date createdAt;
-
-	public int getId() {
-		return id;
-	}
 	
 	// Constructor
 	
@@ -47,9 +43,9 @@ public class Order {
 	}
 	
 	// Getters and Setters
-
-	public void setId(int id) {
-		this.id = id;
+	
+	public int getId() {
+		return id;
 	}
 
 	public User getUser() {
@@ -70,9 +66,5 @@ public class Order {
 
 	public Date getCreatedAt() {
 		return createdAt;
-	}
-
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
 	}
 }

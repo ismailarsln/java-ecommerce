@@ -21,24 +21,24 @@ public class User {
 	@Column(name = "password", nullable = false)
 	private String password;
 	
+	@Column(name = "is_admin", nullable = false)
+	private boolean isAdmin;
+	
 	// Constructor
 	
 	public User() {
 	}
-	
-	public User(String username, String password) {		
+
+	public User(String username, String password, boolean isAdmin) {		
 		this.username = username;
 		this.password = password;
+		this.isAdmin = isAdmin;
 	}
 	
 	// Getters and Setters
 
 	public int getId() {
 		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public String getUsername() {
@@ -55,5 +55,13 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
 	}
 }

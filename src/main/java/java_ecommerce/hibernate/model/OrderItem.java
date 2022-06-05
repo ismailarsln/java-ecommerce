@@ -25,6 +25,9 @@ public class OrderItem {
 	@JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
 	private Product product;
 	
+	@Column(name = "quantity", nullable = false)
+	private int quantity;
+	
 	// Constructor
 	
 	public OrderItem() {
@@ -38,15 +41,8 @@ public class OrderItem {
 	
 	// Getters and Setters	
 
-	@Column(name = "quantity")
-	private int quantity;
-
 	public int getId() {
 		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public Order getOrder() {
