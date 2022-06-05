@@ -54,18 +54,21 @@ public class DaoRepository<T> implements DaoImp<T> {
 	}
 
 	@Override
-	public void save(T entity) {
+	public int save(T entity) {
 		Session session = _sessionFactory.openSession(); 
+		int entityId = -1;
 		
 		try {
 			session.beginTransaction();
-			session.save(entity);
+			entityId = (int) session.save(entity);
 		    session.getTransaction().commit();
 		} catch (Exception e) {
 			session.getTransaction().rollback();
 		} finally {
 			session.close();
 		}	
+		
+		return entityId;
 	}
 
 	@Override
@@ -99,6 +102,10 @@ public class DaoRepository<T> implements DaoImp<T> {
 			session.close();
 		}	
 		
+	}
+	
+	public SessionFactory getSessionFactory() {
+		return this._sessionFactory;
 	}
 
 }
