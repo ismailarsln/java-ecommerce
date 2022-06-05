@@ -104,7 +104,7 @@ public class DaoRepository<T> implements DaoImp<T> {
 		
 	}
 	
-	public SessionFactory getSessionFactory() {
+	protected SessionFactory getSessionFactory() {
 		return this._sessionFactory;
 	}
 
