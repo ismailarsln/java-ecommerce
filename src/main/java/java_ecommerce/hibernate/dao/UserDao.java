@@ -11,7 +11,7 @@ public class UserDao extends DaoRepository<User> {
 		super(User.class);
 	}
 	
-	public User FetchByUsernameAndPassword(String username, String password){
+	public User fetchByUsernameAndPassword(String username, String password){
 		Session session = getSessionFactory().openSession(); 
 		User user = null;
 		
