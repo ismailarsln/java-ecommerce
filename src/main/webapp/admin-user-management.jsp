@@ -13,31 +13,44 @@
 <body>
 	<%@include file="components/navbar.jsp"%>
 	<%@include file="components/message.jsp"%>
-	<div>
-
+	<div class="user-management-box">
+		<%
+			UserDao userDao = new UserDao();
+			List<User> userList = userDao.fetchAll();
+		%>
+		<div class="mb-5">
+			<h5>Toplam kullanıcı sayısı: <%=userList.size()%></h5>			
+		</div>
 		<table class="table table-striped text-center">
 			<thead>
 				<tr>
-					<th scope="col">#</th>
-					<th scope="col">Kullanıcı adı</th>
-					<th scope="col">Rolü</th>
-					<th scope="col"></th>
+					<th class="col-md-1" scope="col">#</th>
+					<th class="col-md-7" scope="col">Kullanıcı adı</th>
+					<th class="col-md-2" scope="col">Rolü</th>
+					<th class="col-md-2" scope="col"></th>
 				</tr>
 			</thead>
-			<tbody class="category-table">
+			<tbody class="user-table">
 				<%
-				UserDao userDao = new UserDao();
-				List<User> userList = userDao.fetchAll();
-
-				for (int i = 0; i < userList.size(); i++) {
+					for (int i = 0; i < userList.size(); i++) {
 				%>
 				<tr>
 					<th class="text-break" scope="row"><%=i + 1%></th>
 					<td class="text-break"><%=userList.get(i).getUsername()%></td>
-					<td class="text-break"><%=userList.get(i).isAdmin() ? "ADMIN" : "USER"%></td>
+					<td class="text-break"><%=userList.get(i).isAdmin() ? "ADMIN" : "KULLANICI"%></td>
 					<td>
-						<button class="btn btn-sm btn-primary btn-block">Düzenle</button>
-						<button class="btn btn-sm btn-danger btn-block">Sil</button>
+						<div class="d-flex justify-content-end">
+							<form id="changeRoleForm<%=i+1%>" action="UserOperationServlet" method="post">
+								<input type="hidden" name="operation" value="changeRole">
+							    <input type="hidden" value="<%=userList.get(i).getId()%>" name="userId" />
+							</form>
+							<button class="btn btn-sm btn-primary btn-block ms-2" onclick="changeRole(<%=i + 1%>)">Rolünü <%=!userList.get(i).isAdmin() ? "ADMIN" : "KULLANICI"%> Yap</button>
+							<form id="deleteForm<%=i+1%>" action="UserOperationServlet" method="post">
+								<input type="hidden" name="operation" value="delete">
+								<input type="hidden" name="userId" value="<%=userList.get(i).getId()%>">
+							</form>
+							<button class="btn btn-sm btn-danger btn-block ms-2" onclick="deleteUser(<%=i + 1%>)">Sil</button>
+						</div>		
 					</td>
 				</tr>
 				<%
@@ -47,5 +60,37 @@
 		</table>
 	</div>
 
+	<script>
+		function deleteUser(count){
+			var result = confirm(count + " numaralı kullanıcı silenecek. Onaylıyor musunuz?");
+			if(result){
+				var deleteForm = document.getElementById("deleteForm" + count);
+				deleteForm.submit();
+			}		
+		}
+		
+		function changeRole(count){
+			var result = confirm(count + " numaralı kullanıcının rolü güncellenecek. Onaylıyor musunuz?");
+			if(result){
+				var deleteForm = document.getElementById("changeRoleForm" + count);
+				deleteForm.submit();
+			}	
+		}
+	</script>
 </body>
+<style>
+	.user-management-box {
+		background-color: #f5f5f5;
+		border-radius: 10px;
+		padding: 30px;
+		margin: 30px;
+	}
+	
+	.user-table td {
+	    vertical-align: middle;
+	}
+	.user-table th {
+	    vertical-align: middle;
+	}
+</style>
 </html>

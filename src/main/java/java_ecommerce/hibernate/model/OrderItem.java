@@ -25,6 +25,9 @@ public class OrderItem {
 	@JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
 	private Product product;
 	
+	@Column(name = "price", nullable = false)
+	private double price;
+	
 	@Column(name = "quantity", nullable = false)
 	private int quantity;
 	
@@ -33,9 +36,10 @@ public class OrderItem {
 	public OrderItem() {
 	}
 	
-	public OrderItem(Order order, Product product, int quantity) {
+	public OrderItem(Order order, Product product, double price, int quantity) {
 		this.order = order;
 		this.product = product;
+		this.price = price;
 		this.quantity = quantity;
 	}
 	
@@ -59,6 +63,14 @@ public class OrderItem {
 
 	public void setProduct(Product product) {
 		this.product = product;
+	}
+	
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
 	}
 
 	public int getQuantity() {

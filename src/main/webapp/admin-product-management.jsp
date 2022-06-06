@@ -16,39 +16,54 @@
 <body>
 	<%@include file="components/navbar.jsp"%>
 	<%@include file="components/message.jsp" %>
-	<div>
+	<div class="product-management-box">
+		<%
+			ProductDao productDao = new ProductDao();
+			List<Product> productList = productDao.fetchAll();
+		%>
+		<div class="mb-5">
+			<h5>Toplam ürün sayısı: <%=productList.size()%></h5>			
+		</div>
 		<button type="button" class="btn btn-success" data-bs-toggle="modal"
 			data-bs-target="#addProductModal">Ekle</button>
 
 		<table class="table table-striped text-center">
 			<thead>
 				<tr>
-					<th scope="col">#</th>
-					<th scope="col">Resmi</th>
-					<th scope="col">Adı</th>
-					<th scope="col">Kategorisi</th>
-					<th scope="col">Fiyatı</th>
-					<th scope="col">Stok adedi</th>
-					<th scope="col"></th>
+					<th class="col-md-1"  scope="col">#</th>
+					<th class="col-md-1"  scope="col">Ürün ID</th>
+					<th class="col-md-2" scope="col">Ürün Resmi</th>
+					<th class="col-md-2"  scope="col">Ürün Adı</th>
+					<th class="col-md-2"  scope="col">Ürün Kategorisi</th>
+					<th class="col-md-2"  scope="col">Ürün Fiyatı</th>
+					<th class="col-md-1"  scope="col">Ürün Stok Adedi</th>
+					<th class="col-md-1"  scope="col"></th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody class="product-table">
 				<%
-				ProductDao productDao = new ProductDao();
-				List<Product> productList = productDao.fetchAll();
-
-				for (int i = 0; i < productList.size(); i++) {
+					for (int i = 0; i < productList.size(); i++) {
 				%>
 				<tr>
 					<th class="text-break" scope="row"><%=i + 1%></th>
-					<td class="text-break"><img src="<%=productList.get(i).getImage()%>" width="45px" height="45px"></td>
+					<th class="text-break" scope="row">#<%=productList.get(i).getId()%></th>
+					<td class="text-break"><img src="img<%=productList.get(i).getImage()%>" width="200px" height="200px"></td>
 					<td class="text-break"><%=productList.get(i).getName()%></td>
 					<td class="text-break"><%=productList.get(i).getCategory().getName()%></td>
 					<td class="text-break"><%=productList.get(i).getPrice()%> TL</td>
 					<td class="text-break"><%=productList.get(i).getStock()%></td>
 					<td>
-						<button class="btn btn-sm btn-primary btn-block">Düzenle</button>
-						<button class="btn btn-sm btn-danger btn-block">Sil</button>
+						<div class="d-flex justify-content-end">
+							<form action="admin-product-edit.jsp" method="get">
+						    	<input type="hidden" value="<%=productList.get(i).getId()%>" name="productid" /> 
+						    	<input class="btn btn-sm btn-primary btn-block" id="editSubmit" type="submit" value="Düzenle"/>
+							</form>
+							<form id="deleteForm<%=i+1%>" action="ProductOperationServlet" method="post">
+								<input type="hidden" name="operation" value="delete">
+								<input type="hidden" name="productId" value="<%=productList.get(i).getId()%>">
+							</form>
+							<button class="btn btn-sm btn-danger btn-block ms-2" onclick="deleteProduct(<%=i + 1%>)">Sil</button>
+						</div>						
 					</td>
 				</tr>
 				<%
@@ -61,7 +76,7 @@
 	<!-- Add Category Modal -->
 
 	<div class="modal fade" id="addProductModal" tabindex="-1"
-		aria-labelledby="addProductModalLabel" aria-hidden="true">
+		aria-labelledby="addProductModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -72,13 +87,15 @@
 				</div>
 				<div class="modal-body">
 
-					<form action="ProductOperationServlet" method="post">
+					<form action="ProductOperationServlet" method="post" enctype="multipart/form-data">
 						<input type="hidden" name="operation" value="add">
 						<div class="mb-3">
-							<input type="text" class="form-control" id="productName"
+							<label for="productName">Ürün adı(*)</label>
+							<input type="text" class="form-control mb-3" id="productName"
 								name="productName" placeholder="Ürün adı" required>
-														
-							<select name="category" class="form-control" id="category">
+								
+							<label for="category">Kategorisi(*)</label>							
+							<select name="category" class="form-control mb-3" id="category" required>
 								<%
 									CategoryDao categoryDao = new CategoryDao();
 									List<Category> categoryList = categoryDao.fetchAll();
@@ -90,10 +107,12 @@
 								%>								
 							</select>
 							
-							<input type="number" class="form-control" id="productPrice"
+							<label for="productPrice">Fiyatı(*)</label>
+							<input type="number" class="form-control mb-3" id="productPrice"
 								name="productPrice" placeholder="Ürün fiyatı" required>
-								
-							<input type="number" class="form-control" id="productStock"
+							
+							<label for="productStock">Stok adedi(*)</label>
+							<input type="number" class="form-control mb-3" id="productStock"
 								name="productStock" placeholder="Stok adedi" required>
 								
 							<label for="productImage">Ürün resmini seçiniz</label><br>
@@ -112,6 +131,33 @@
 	</div>
 
 	<!-- Add Category Modal End -->
-
+	
+		<script>
+		function deleteProduct(count){
+			var result = confirm(count + " numaralı ürün silenecek. Onaylıyor musunuz?");
+			if(result){
+				var deleteForm = document.getElementById("deleteForm" + count);
+				deleteForm.submit();
+			}		
+		}
+	</script>
+	
 </body>
+
+<style>
+	.product-management-box {
+		background-color: #f5f5f5;
+		border-radius: 10px;
+		padding: 30px;
+		margin: 30px;
+	}
+	
+	.product-table td {
+	    vertical-align: middle;
+	}
+	.product-table th {
+	    vertical-align: middle;
+	}
+</style>
+
 </html>
