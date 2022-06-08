@@ -45,7 +45,10 @@ public class ProductOperationServlet extends HttpServlet {
 				
 				// Validations
 				
-				validateProduct(response, httpSession, productName, categoryId, productPrice, productStock, productImagePart);
+				int validationResult = validateProduct(response, httpSession, productName, categoryId, productPrice, productStock, productImagePart);
+				if(validationResult == -1) {
+					return;
+				}
 				
 				
 				// Create product to db
@@ -82,8 +85,10 @@ public class ProductOperationServlet extends HttpServlet {
 				
 				// Validations
 				
-				validateProduct(response, httpSession, productName, categoryId, productPrice, productStock, productImagePart);
-				
+				int validationResult = validateProduct(response, httpSession, productName, categoryId, productPrice, productStock, productImagePart);
+				if(validationResult == -1) {
+					return;
+				}
 				// Update product in db
 				
 				Product updatedProduct = productDao.fetchById(productId);
@@ -164,37 +169,39 @@ public class ProductOperationServlet extends HttpServlet {
 		}
 	}
 
-	private void validateProduct(HttpServletResponse response, HttpSession httpSession, String productName,
+	private int validateProduct(HttpServletResponse response, HttpSession httpSession, String productName,
 			int categoryId, double productPrice, int productStock, Part productImagePart) throws IOException {
 		if(productName.isEmpty()) {
 			httpSession.setAttribute("red-message", "Ürün adi bos olamaz");				
 			response.sendRedirect("admin-product-management.jsp");
-			return;
+			return -1;
 		}
 		
 		if(categoryId < 0) {
 			httpSession.setAttribute("red-message", "Gecersiz kategori");				
 			response.sendRedirect("admin-product-management.jsp");
-			return;
+			return -1;
 		}
 		
 		if(productPrice < 0) {
 			httpSession.setAttribute("red-message", "Urun fiyati en az 0 olabilir");				
 			response.sendRedirect("admin-product-management.jsp");
-			return;
+			return -1;
 		}
 		
 		if(productStock < 0) {
 			httpSession.setAttribute("red-message", "Urun stogu en az 0 olabilir");				
 			response.sendRedirect("admin-product-management.jsp");
-			return;
+			return -1;
 		}
 		
 		if(productImagePart.getSize() > 10485760) {
 			httpSession.setAttribute("red-message", "Resim boyutu en fazla 10 MB olabilir");				
 			response.sendRedirect("admin-product-management.jsp");
-			return;
+			return -1;
 		}
+		
+		return 0;
 	}
 
 	private String uploadImage(HttpServletRequest request, Part productImagePart)

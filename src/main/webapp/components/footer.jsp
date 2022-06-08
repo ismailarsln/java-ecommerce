@@ -46,14 +46,10 @@
 									<li
 										<%=request.getRequestURI().equals("/java-ecommerce/shop.jsp") ? "class='nav-item active'" : "class='nav-item'"%>>
 										<a class="nav-link" href="shop.jsp">ALISVERIS YAP</a>
-									</li>
-									<li
-										<%=request.getRequestURI().equals("/java-ecommerce/cart.jsp") ? "class='nav-item active'" : "class='nav-item'"%>>
-										<a class="nav-link" href="cart.jsp">SEPET</a>
-									</li>
+									</li>									
 									<%
 										if(session.getAttribute("current-user") == null){
-											%>
+											%>									
 												<li
 													<%=request.getRequestURI().equals("/java-ecommerce/login.jsp") ? "class='nav-item active'" : "class='nav-item'"%>>
 													<a class="nav-link" href="login.jsp">GIRIS YAP</a>
@@ -61,6 +57,13 @@
 												<li
 													<%=request.getRequestURI().equals("/java-ecommerce/register.jsp") ? "class='nav-item active'" : "class='nav-item'"%>>
 													<a class="nav-link" href="register.jsp">KAYIT OL</a>
+												</li>
+											<%
+										} else {
+											%>
+												<li
+													<%=request.getRequestURI().equals("/java-ecommerce/cart.jsp") ? "class='nav-item active'" : "class='nav-item'"%>>
+													<a class="nav-link" href="cart.jsp">SEPET</a>
 												</li>
 											<%
 										}

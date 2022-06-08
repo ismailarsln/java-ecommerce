@@ -166,9 +166,15 @@
 											<!-- Ratings & Cart -->
 											<div class="ratings-cart text-right">
 												<div class="cart">
-													<a href="cart.html" data-toggle="tooltip"
-														data-placement="left" title="Sepete Ekle"><img
-														src="img/core-img/cart.png" alt="" width="25px"><span style="font-size: 15px"> | Sepete Ekle</span></a>
+													<form class="cart clearfix" action="CartOperationServlet" method="post">
+														<input type="hidden" name="operation" value="add">
+														<input type="hidden" name="userId" value="<%=navbarUser == null ? -1 : navbarUser.getId()%>">
+														<input type="hidden" name="productId" value="<%=product.getId()%>">
+														<input type="hidden" name="quantity" value="1">														
+														<button type="submit" name="addtocart" class="btn amado-btn" <%= product.getStock() > 0 ? "" : "disabled"%>>
+															<i class="fa fa-shopping-cart" aria-hidden="true"></i><span style="font-size: 15px"> | Sepete Ekle</span>
+														</button>
+													</form>
 												</div>
 											</div>
 										</div>

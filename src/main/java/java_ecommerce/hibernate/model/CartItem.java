@@ -8,43 +8,36 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "order_items")
-public class OrderItem {
+@Table(name = "cart_items", uniqueConstraints = { @UniqueConstraint(name = "UID_PID", columnNames = { "user_id", "product_id" })})
+public class CartItem {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
 	
 	@ManyToOne
-	@JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false)
-	private Order order;
+	@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+	private User user;
 	
 	@ManyToOne
 	@JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
 	private Product product;
 	
-	@Column(name = "price", nullable = false)
-	private double price;
-	
 	@Column(name = "quantity", nullable = false)
 	private int quantity;
 	
-	@Column(name = "is_delivered", nullable = false)
-	private boolean delivered;
-	
 	// Constructor
-
-	public OrderItem() {
+	
+	public CartItem() {
 	}
 	
-	public OrderItem(Order order, Product product, double price, int quantity, boolean delivered) {
-		this.order = order;
+	public CartItem(User user, Product product, int quantity) {
+		this.user = user;
 		this.product = product;
-		this.price = price;
 		this.quantity = quantity;
-		this.delivered = delivered;
 	}
 	
 	// Getters and Setters	
@@ -53,12 +46,12 @@ public class OrderItem {
 		return id;
 	}
 
-	public Order getOrder() {
-		return order;
+	public User getUser() {
+		return user;
 	}
 
-	public void setOrder(Order order) {
-		this.order = order;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public Product getProduct() {
@@ -68,14 +61,6 @@ public class OrderItem {
 	public void setProduct(Product product) {
 		this.product = product;
 	}
-	
-	public double getPrice() {
-		return price;
-	}
-
-	public void setPrice(double price) {
-		this.price = price;
-	}
 
 	public int getQuantity() {
 		return quantity;
@@ -83,13 +68,5 @@ public class OrderItem {
 
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
-	}
-	
-	public boolean isDelivered() {
-		return delivered;
-	}
-
-	public void setDelivered(boolean delivered) {
-		this.delivered = delivered;
 	}
 }

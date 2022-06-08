@@ -1,3 +1,4 @@
+<%@page import="java_ecommerce.hibernate.dao.CartItemDao"%>
 <%@page import="java_ecommerce.hibernate.model.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -36,8 +37,24 @@ User navbarUser = (User) session.getAttribute("current-user");
 				<div class="cart-fav-search mb-100">
 					<li><a href="shop.jsp" class="fav-nav"><img
 							src="img/core-img/favorites.png" alt=""> Alışveriş Yap</a></li>
+					<%
+					if (navbarUser != null) {
+					%>
 					<li><a href="cart.jsp" class="cart-nav"><img
-							src="img/core-img/cart.png" alt="" width="20px"> Sepet <span>(0)</span></a></li>
+							src="img/core-img/cart.png" alt="" width="20px"> Sepet
+							<%
+								CartItemDao cartItemDao = new CartItemDao();
+								int cartLength = cartItemDao.fetchAllByUserId(navbarUser.getId()).size();
+							%>
+								<span>
+									(<%=cartLength%>)
+								</span>
+								<%							
+							%>							
+							</a></li>
+					<%
+					}
+					%>
 				</div>
 
 

@@ -24,6 +24,7 @@
   		<mapping class="java_ecommerce.hibernate.model.User"/>  		
   		<mapping class="java_ecommerce.hibernate.model.Order"/>
   		<mapping class="java_ecommerce.hibernate.model.OrderItem"/>
+  		<mapping class="java_ecommerce.hibernate.model.CartItem"/>
   		  		
     </session-factory>
     

@@ -79,4 +79,14 @@
     <servlet-name>UserOperationServlet</servlet-name>
     <url-pattern>/UserOperationServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CartOperationServlet</display-name>
+    <servlet-name>CartOperationServlet</servlet-name>
+    <servlet-class>java_ecommerce.hibernate.servlets.CartOperationServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CartOperationServlet</servlet-name>
+    <url-pattern>/CartOperationServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

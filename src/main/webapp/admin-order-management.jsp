@@ -107,7 +107,26 @@
 								TL</td>
 							<td class="text-truncate" style="max-width: 20px;">x<%=orderItemList.get(j).getQuantity()%></td>
 							<td class="text-truncate" style="max-width: 20px;"><%=orderList.get(i).getCreatedAt()%></td>
-							<td class="text-danger">Onaylanmadı</td>
+							<td>
+								<%if(!orderItemList.get(j).isDelivered()) {
+								%>	
+									<div class="text-danger">
+										<i class="fa fa-times-circle" aria-hidden="true"></i>
+										<span><strong>Teslim Edilmedi</strong></span>
+										<form action="OrderOperationServlet" method="post">
+											<input type="hidden" name="operation" value="deliver">
+											<input type="hidden" name="orderItemId" value="<%=orderItemList.get(j).getId()%>">
+											<input type="submit" class="btn btn-success" value="Siparişi Teslim Et"></button>
+										</form>										
+									</div>									
+								<%} else {
+									%>
+									<div class="text-success">
+										<i class="fa fa-check-circle-o" aria-hidden="true"></i>
+										<span><strong>Teslim Edildi</strong></span>
+									</div>									
+								<%}%>								
+							</td>
 						</tr>
 						<%
 						count++;

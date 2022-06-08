@@ -51,9 +51,10 @@ if (product == null) {
 		</div>
 		<div class="col">
 			<!-- ##### Main Content Wrapper Start ##### -->
-			<div class="main-content-wrapper d-flex clearfix">
+			<div class="main-content-wrapper clearfix">
 				<!-- Product Details Area Start -->
 				<div class="single-product-area section-padding-100 clearfix">
+					<%@include file="components/message.jsp"%>
 					<div class="container-fluid">
 
 						<div class="row">
@@ -98,11 +99,11 @@ if (product == null) {
 											<%
 												if(product.getStock() > 0){
 													%>
-													<i class="fa fa-circle available"></i> In Stock
+													<i class="fa fa-circle available"></i> Stokta <%=product.getStock()%> adet var
 													<%
 												} else {
 													%>
-													<i class="fa fa-circle not-available"></i> Out of Stock
+													<i class="fa fa-circle not-available"></i> Stokta yok
 													<%
 												}
 											%>											
@@ -117,7 +118,10 @@ if (product == null) {
 									</div>
 
 									<!-- Add to Cart Form -->
-									<form class="cart clearfix" method="post">
+									<form class="cart clearfix" action="CartOperationServlet" method="post">
+										<input type="hidden" name="operation" value="add">
+										<input type="hidden" name="userId" value="<%=navbarUser == null ? -1 : navbarUser.getId()%>">
+										<input type="hidden" name="productId" value="<%=product.getId()%>">
 										<div class="cart-btn d-flex mb-50">
 											<p>Adet</p>
 											<div class="quantity">
@@ -131,8 +135,7 @@ if (product == null) {
 													class="fa fa-caret-up" aria-hidden="true"></i></span>
 											</div>
 										</div>
-										<button type="submit" name="addtocart" value="5"
-											class="btn amado-btn" <%= product.getStock() > 0 ? "" : "disabled"%>>Sepete Ekle</button>
+										<button type="submit" name="addtocart" class="btn amado-btn" <%= product.getStock() > 0 ? "" : "disabled"%>>Sepete Ekle</button>
 									</form>
 
 								</div>

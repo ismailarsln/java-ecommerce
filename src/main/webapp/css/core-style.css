@@ -875,15 +875,15 @@ img {
         font-size: 14px; }
       .main-content-wrapper .single-product-area .single_product_desc .product-meta-data .avaibility {
         margin-bottom: 0;
-        font-size: 12px;
+        font-size: 15px;
         color: #6b6b6b;
         line-height: 1; }
         .main-content-wrapper .single-product-area .single_product_desc .product-meta-data .avaibility i.available {
           color: #20d34a;
-          font-size: 12px; }
+          font-size: 15px; }
         .main-content-wrapper .single-product-area .single_product_desc .product-meta-data .avaibility i.not-available {
           color: #FF0000;
-          font-size: 12px; }
+          font-size: 15px; }
       .main-content-wrapper .single-product-area .single_product_desc .short_overview p {
         line-height: 2.1;
         color: #6b6b6b; }
