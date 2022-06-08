@@ -136,6 +136,25 @@ public class ProductOperationServlet extends HttpServlet {
 				response.sendRedirect("admin-product-management.jsp");
 				return;
 				
+			} else if(operation.trim().equals("resetImage")) {
+				int productId = Integer.parseInt(request.getParameter("productId"));
+				
+				Product updatedProduct = productDao.fetchById(productId);
+				
+				if(updatedProduct == null) {
+					httpSession.setAttribute("red-message", "Gecersiz urun id");
+					response.sendRedirect("admin-product-management.jsp");
+					return;
+				}
+				
+				updatedProduct.setImage("\\product\\default.png");
+				// Update product in db
+				
+				productDao.update(updatedProduct);
+				
+				httpSession.setAttribute("green-message", "Urun basariyla guncellendi");
+				response.sendRedirect("admin-product-management.jsp");
+				return;				
 			} else {
 				response.sendRedirect("error.jsp");
 			}

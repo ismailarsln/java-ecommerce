@@ -1,14 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Error</title>
-<%@include file="components/bootstrap-jquery.jsp"%>
+<title>Java-Ecommerce | Error</title>
 </head>
 <body>
-	<%@include file="components/navbar.jsp"%>
-	<h1>500 - Internal Server Error</h1>
+	<div class="row">
+		<div class="col-auto">
+			<%@include file="components/navbar.jsp"%>
+		</div>
+		<div class="col mt-50">
+			<h1>Üzgünüz, bir hata oluştu :(</h1>
+		</div>
+	</div>
+	<%@include file="components/footer.jsp"%>
+	<%@include file="components/links-scripts.jsp"%>
 </body>
 </html>

@@ -8,13 +8,13 @@
 @import url(../css/nice-select.css);
 @import url(../css/font-awesome.min.css);
 @font-face {
-  font-family: 'helveticaneuebold';
-  src: url("../fonts/helvetica_neu_bold-webfont.woff2") format("woff2"), url("../fonts/helvetica_neu_bold-webfont.woff") format("woff");
+  font-family: 'robotobold';
+  src: url("../fonts/Roboto-Bold.ttf") format("truetype");
   font-weight: normal;
   font-style: normal; }
 @font-face {
-  font-family: 'helveticaneuemedium';
-  src: url("../fonts/helveticaneue_medium-webfont.woff2") format("woff2"), url("../fonts/helveticaneue_medium-webfont.woff") format("woff");
+  font-family: 'robotomedium';
+  src: url("../fonts/Roboto-Medium.ttf") format("truetype");
   font-weight: normal;
   font-style: normal; }
 /* :: 2.0 Import All CSS */
@@ -24,7 +24,7 @@
   padding: 0; }
 
 body {
-  font-family: "helveticaneuemedium";
+  font-family: "robotomedium";
   font-size: 16px; }
 
 h1,
@@ -878,8 +878,11 @@ img {
         font-size: 12px;
         color: #6b6b6b;
         line-height: 1; }
-        .main-content-wrapper .single-product-area .single_product_desc .product-meta-data .avaibility i {
+        .main-content-wrapper .single-product-area .single_product_desc .product-meta-data .avaibility i.available {
           color: #20d34a;
+          font-size: 12px; }
+        .main-content-wrapper .single-product-area .single_product_desc .product-meta-data .avaibility i.not-available {
+          color: #FF0000;
           font-size: 12px; }
       .main-content-wrapper .single-product-area .single_product_desc .short_overview p {
         line-height: 2.1;

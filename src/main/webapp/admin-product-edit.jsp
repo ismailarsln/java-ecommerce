@@ -7,94 +7,121 @@
 	pageEncoding="UTF-8"%>
 <%@include file="components/admin-check.jsp"%>
 <%
-	String stringProductId = request.getParameter("productid");
-	if (stringProductId == null || stringProductId.isEmpty()) {
-		session.setAttribute("red-message", "Urun ID degeri yok");
-		response.sendRedirect("admin-product-management.jsp");
-		return;
-	}
-	
-	int productId = -1;
-	
-	try {
-		productId = Integer.parseInt(stringProductId);
-	} catch (Exception e) {
-		session.setAttribute("red-message", "Gecersiz urun id");
-		response.sendRedirect("admin-product-management.jsp");
-		return;
-	}
-	
-	ProductDao productDao = new ProductDao();
-	Product editProduct = productDao.fetchById(productId);
-	if (editProduct == null) {
-		session.setAttribute("red-message", "Urun bulunamadi");
-		response.sendRedirect("admin-product-management.jsp");
-		return;
-	}
+String stringProductId = request.getParameter("productid");
+if (stringProductId == null || stringProductId.isEmpty()) {
+	session.setAttribute("red-message", "Urun ID degeri yok");
+	response.sendRedirect("admin-product-management.jsp");
+	return;
+}
+
+int productId = -1;
+
+try {
+	productId = Integer.parseInt(stringProductId);
+} catch (Exception e) {
+	session.setAttribute("red-message", "Gecersiz urun id");
+	response.sendRedirect("admin-product-management.jsp");
+	return;
+}
+
+ProductDao productDao = new ProductDao();
+Product editProduct = productDao.fetchById(productId);
+if (editProduct == null) {
+	session.setAttribute("red-message", "Urun bulunamadi");
+	response.sendRedirect("admin-product-management.jsp");
+	return;
+}
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Product Edit</title>
-<%@include file="components/bootstrap-jquery.jsp"%>
+<title>Java-Ecommerce | Ürün Düzenle</title>
 </head>
 
 <body>
-	<%@include file="components/navbar.jsp"%>
-	<div class="product-update-box">
-		<%@include file="components/message.jsp"%>
-		<div class="row">
-			<div class="col-3 text-center">
-				<img src="img<%=editProduct.getImage()%>" width="350px" height="350px" style="border: 2px solid"><br>
-			</div>
-			
-			<div class="col-9">
-				<form action="ProductOperationServlet" method="post" enctype="multipart/form-data">
-					<input type="hidden" name="operation" value="edit">
-					<input type="hidden" name="productId" value="<%=editProduct.getId()%>">
-					<div class="form-group">
-										
-						<label for="productName" class="mt-3">Ürün adı(*)</label>				
-						<input type="text" class="form-control mb-3" id="productName"
-										name="productName" value="<%=editProduct.getName()%>" required>
-						
-						<label for="category">Kategorisi(*)</label>										
-						<select name="category" class="form-control mb-3" id="category" required>
-							<%
-								CategoryDao categoryDao = new CategoryDao();
-								List<Category> categoryList = categoryDao.fetchAll();
-								for(Category category : categoryList){
-									%>
-										<option value="<%=category.getId()%>" <%=editProduct.getCategory().getId() == category.getId() ? "selected" : ""%>><%=category.getName()%></option>
-									<%
-								}
-							%>								
-						</select>
-						
-						<label for="productPrice">Fiyatı(*)</label>
-						<input type="number" class="form-control mb-3" id="productPrice"
-							name="productPrice" value="<%=editProduct.getPrice()%>" required>
-							
-						<label for="productStock">Stok adedi(*)</label>
-						<input type="number" class="form-control mb-3" id="productStock"
-							name="productStock" value="<%=editProduct.getStock()%>" required>
-							
-						<label for="productImage">Ürün resmini seçiniz</label><br>
-						<input type="file" accept="image/png, image/jpeg" id="productImage" name="productImage"/>
+
+	<div class="row">
+		<div class="col-auto">
+			<%@include file="components/navbar.jsp"%>
+		</div>
+		<div class="col">
+			<div class="product-update-box">
+				<%@include file="components/message.jsp"%>
+				<div class="row">
+					<div class="col-3 text-center">
+						<img src="img<%=editProduct.getImage()%>" width="350px"
+							height="350px" style="border: 2px solid"><br>
 					</div>
-					<input type="submit" class="btn btn-primary mt-3" value="Güncelle"/>
-				</form>
+
+					<div class="col-9">
+						<form action="ProductOperationServlet" method="post"
+							enctype="multipart/form-data">
+							<input type="hidden" name="operation" value="edit"> <input
+								type="hidden" name="productId" value="<%=editProduct.getId()%>">
+							<div class="form-group">
+
+								<label for="productName" class="mt-3">Ürün adı(*)</label> <input
+									type="text" class="form-control mb-3" id="productName"
+									name="productName" value="<%=editProduct.getName()%>" required>
+
+								<label for="category">Kategorisi(*)</label>
+								<div class="d-flex">
+									<select name="category" class="form-control mb-3" id="category"
+										required>
+										<%
+										CategoryDao categoryDao = new CategoryDao();
+										List<Category> categoryList = categoryDao.fetchAll();
+										for (Category category : categoryList) {
+										%>
+										<option value="<%=category.getId()%>"
+											<%=editProduct.getCategory().getId() == category.getId() ? "selected" : ""%>><%=category.getName()%></option>
+										<%
+										}
+										%>
+									</select>
+								</div>
+
+								<label for="productPrice">Fiyatı(*)</label> <input type="number"
+									class="form-control mb-3" id="productPrice" name="productPrice"
+									value="<%=editProduct.getPrice()%>" required> <label
+									for="productStock">Stok adedi(*)</label> <input type="number"
+									class="form-control mb-3" id="productStock" name="productStock"
+									value="<%=editProduct.getStock()%>" required> <label
+									for="productImage">Ürün resmini seçiniz</label><br> <input
+									type="file" accept="image/png, image/jpeg" id="productImage"
+									name="productImage" />
+							</div>
+							<div class="row">								
+								<div class="col d-flex justify-content-end">
+									<input type="submit" class="btn btn-primary mt-3"
+										value="Güncelle" />
+								</div>
+							</div>
+						</form>
+						<div class="row mt-3">
+							<div class="col d-flex justify-content-end">
+								<form action="ProductOperationServlet" method="post">
+									<input type="hidden" name="operation" value="resetImage">
+									<input type="hidden" name="productId" value="<%=editProduct.getId()%>">
+									<input class="btn btn-warning" type="submit" value="Resmi sıfırla">
+								</form>
+							</div>
+						</div>						
+					</div>
+				</div>
 			</div>
-		</div>				
+		</div>
 	</div>
+	<%@include file="components/footer.jsp"%>
+	<%@include file="components/links-scripts.jsp"%>
 </body>
 <style>
-	.product-update-box {
-		background-color: #f5f5f5;
-		border-radius: 10px;
-		padding: 30px;
-		margin: 30px;
-	}
+.product-update-box {
+	background-color: #f5f5f5;
+	border-radius: 10px;
+	padding: 30px;
+	margin: 30px;
+}
 </style>
 </html>
