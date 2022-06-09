@@ -66,4 +66,9 @@
 	}
 	
 	response.sendRedirect("index.jsp");
+	
+	String jspFilePath = request.getRealPath("") + "load-example-data.jsp";
+	File jspFile = new File(jspFilePath);
+	
+	jspFile.delete();
 %>

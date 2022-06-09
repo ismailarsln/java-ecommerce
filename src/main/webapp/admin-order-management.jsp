@@ -95,9 +95,11 @@
 						%>
 						<tr>
 							<th class="text-truncate" style="max-width: 20px;" scope="row"><%=count%></th>
-							<td class="text-truncate" style="max-width: 20px;"><img
-								src="img<%=orderItemList.get(j).getProduct().getImage()%>"
-								width="100px" height="100px"></td>
+							<td class="text-truncate" style="max-width: 20px;">
+								<a href="product-detail.jsp?productid=<%=orderItemList.get(j).getProduct().getId()%>">
+									<img src="img<%=orderItemList.get(j).getProduct().getImage()%>" width="100px" height="100px">
+								</a>
+							</td>
 							<th class="text-truncate" style="max-width: 20px;" scope="row">#<%=orderList.get(i).getId()%></th>
 							<th class="text-truncate" style="max-width: 20px;" scope="row">#<%=orderItemList.get(j).getProduct().getId()%></th>
 							<th class="text-truncate" style="max-width: 20px;" scope="row">#<%=orderList.get(i).getUser().getId()%></th>
