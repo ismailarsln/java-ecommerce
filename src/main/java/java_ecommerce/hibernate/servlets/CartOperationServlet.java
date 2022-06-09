@@ -102,7 +102,26 @@ public class CartOperationServlet extends HttpServlet {
 				}				
 				
 			} else if (operation.trim().equals("delete")) {
+				int userId = Integer.parseInt(request.getParameter("userId"));
 				
+				if(userId < 0) {
+					httpSession.setAttribute("red-message", "Sepete urun ekleyebilmek icin öncelikle giris yapmalisiniz");
+					response.sendRedirect("login.jsp");
+					return;
+				}
+				
+				int cartItemId = Integer.parseInt(request.getParameter("cartItemId"));
+				
+				if(cartItemId < 0) {
+					httpSession.setAttribute("red-message", "Gecersiz sepet item id");
+					response.sendRedirect("cart.jsp");
+					return;
+				}
+				
+				cartItemDao.deleteById(cartItemId);
+				httpSession.setAttribute("green-message", "Urun sepetten silindi");
+				response.sendRedirect("cart.jsp");
+				return;
 			} else {
 				response.sendRedirect("error.jsp");
 			}

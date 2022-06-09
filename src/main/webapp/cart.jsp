@@ -57,13 +57,27 @@
 											%>
 											<tr>
 												<td class="cart_product_img"><a href="product-detail.jsp?productid=<%=cartItem.getProduct().getId()%>">
-												<img src="img<%=cartItem.getProduct().getImage()%>" alt="Product"></a></td>
+													<img src="img<%=cartItem.getProduct().getImage()%>" alt="Product"></a>
+												</td>
 												<td class="cart_product_desc">
 													<h5><%=cartItem.getProduct().getName()%></h5>
 												</td>
 												<td class="price"><span><%=cartItem.getProduct().getPrice()%> TL</span></td>
 												<td>
-													<span><%=cartItem.getQuantity()%></span>
+													<div class="row">
+														<div class="col">
+															<span><%=cartItem.getQuantity()%></span>
+														</div>
+														<div class="col">
+															<form action="CartOperationServlet" method="post">
+																<input type="hidden" name="operation" value="delete">
+																<input type="hidden" name="cartItemId" value="<%=cartItem.getId()%>">
+																<input type="hidden" name="userId" value="<%=navbarUser == null ? -1 : navbarUser.getId()%>">
+																<button type="submit" name="createOrder" class="btn btn-danger">Sil</button>
+															</form>														
+														</div>
+													</div>
+													
 												</td>
 											</tr>
 											<%}%>
